@@ -8,3 +8,10 @@ function criarConsulta(criarConsulta: criarConsulta): Consulta {
   };
   return consulta;
 }
+
+function confirmarConsulta(consulta: Consulta): Consulta {
+  return {
+    ...consulta,
+    status: "confirmada",
+  };
+}
