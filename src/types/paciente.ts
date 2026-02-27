@@ -3,5 +3,5 @@ export type Paciente = {
     nome: string;
     cpf: string;
     email: string;
-    telefone: string;
+    telefone?: string;
 }
