@@ -1,43 +1,23 @@
 import { Consulta } from "./interfaces/consulta";
 import { criarConsulta } from "./types/criarConsulta";
+import { medicos } from "./db/medicos.data";
+import { pacientes } from "./db/pacientes.data";
+import { ConsultaService } from "./services/consulta.service";
 
-function criarConsulta(criarConsulta: criarConsulta): Consulta {
-  const consulta: Consulta = {
-    ...criarConsulta,
-    status: "agendada",
-  };
-  return consulta;
-}
+// initial exec
+const [medico1, medico2, medico3] = medicos;
+const [paciente1, paciente2, paciente3] = pacientes;
 
-function confirmarConsulta(consulta: Consulta): Consulta {
-  return {
-    ...consulta,
-    status: "confirmada",
-  };
-}
+const consultaService = new ConsultaService();
 
-function cancelarConsulta(consulta: Consulta): Consulta | null {
-  if (consulta.status === "realizada") {
-    return null;
-  }
-  return {
-    ...consulta,
-    status: "cancelada",
-  };
-}
+const consulta1 = consultaService.criarConsulta({
+  id: 1,
+  medico: medico1,
+  paciente: paciente1,
+  data: new Date(),
+  valor: 350,
+});
 
-function exibirConsulta(consulta: Consulta): string {
-  const valorFormatado = consulta.valor.toLocaleString("pt-BR", {
-    style: "currency",
-    currency: "BRL",
-  });
-  return `
-    Consulta #${consulta.id}
-    Médico: ${consulta.medico.nome}
-    Paciente: ${consulta.paciente.nome}
-    Especialidade: ${consulta.medico.especialidade.nome}
-    Data: ${consulta.data.toLocaleDateString("pt-BR")}
-    Valor: ${valorFormatado}
-    Status: ${consulta.status}
-    `;
-}
+const consultaConfirmada = consultaService.confirmarConsulta(consulta1);
+console.log("=== CONSULTA CONFIRMADA ===");
+console.log(consultaService.exibirConsulta(consultaConfirmada));
