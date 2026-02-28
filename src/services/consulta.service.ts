@@ -1,5 +1,6 @@
 import { Consulta } from "../interfaces/consulta";
 import { criarConsulta } from "../types/criarConsulta";
+import { StatusConsulta } from "../types/statusConsulta";
 
 export class ConsultaService {
   criarConsulta(dadosConsulta: criarConsulta): Consulta {
@@ -41,5 +42,18 @@ export class ConsultaService {
     Valor: ${valorFormatado}
     Status: ${consulta.status}
     `;
+  }
+
+  listarConsultasPorStatus(
+    consultas: Consulta[],
+    status: StatusConsulta
+  ): Consulta[] {
+    return consultas.filter((consulta) => consulta.status === status);
+  }
+
+  listarConsultasFuturas(consultas: Consulta[]): Consulta[] {
+    const hoje = new Date();
+    hoje.setHours(0, 0, 0, 0); // Zera horas para comparar apenas a data
+    return consultas.filter((consulta) => consulta.data >= hoje);
   }
 }
