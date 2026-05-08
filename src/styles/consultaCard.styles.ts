@@ -5,10 +5,7 @@ export const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderRadius: 16,
     padding: 20,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 8,
+    boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
     elevation: 5,
   },
   statusBadge: {
