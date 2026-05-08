@@ -14,13 +14,13 @@ class ConsultasService {
  */
  private async obterTodasConsultas(): Promise<Consulta[]> {
  try {
- const consultasJSON = await AsyncStorage.getItem("@consultas");
- if (!consultasJSON) return [];
- return JSON.parse(consultasJSON);
- } catch (error) {
- console.error("Erro ao obter consultas:", error);
- return [];
- }
+        const consultasJSON = await AsyncStorage.getItem("@consultas");
+        if (!consultasJSON) return [];
+        return JSON.parse(consultasJSON);
+    } catch (error) {
+        console.error("Erro ao obter consultas:", error);
+    return [];
+    }
  }
 
  /**
