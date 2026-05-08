@@ -14,7 +14,7 @@ import {
 } from "react-native";
 import { Consulta } from "../types";
 import { Loading } from "../components";
-import consultasService from "../services/consultasService";
+import consultasService from "../services/consultaService";
 import {
  formatarData,
  formatarHorario,
