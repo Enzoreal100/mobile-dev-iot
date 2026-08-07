@@ -3,7 +3,8 @@
  * Exibe consultas filtradas por usuário (paciente vê só suas, admin vê todas)
  */
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useCallback } from "react";
+import { useFocusEffect } from "@react-navigation/native";
 import {
   View,
   Text,
@@ -34,9 +35,11 @@ export default function ConsultasListScreen({
     "todas"
   );
 
-  useEffect(() => {
-    carregarConsultas();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      carregarConsultas();
+    }, [usuario?.id])
+  )
 
   async function carregarConsultas() {
     setLoading(true);
