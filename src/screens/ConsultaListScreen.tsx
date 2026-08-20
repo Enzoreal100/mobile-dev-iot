@@ -32,21 +32,21 @@ export default function ConsultasListScreen({
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [filtroAtivo, setFiltroAtivo] = useState<StatusConsulta | "todas">(
-    "todas"
+    "todas",
   );
 
   useFocusEffect(
     useCallback(() => {
       carregarConsultas();
-    }, [usuario?.id])
-  )
+    }, [usuario?.id]),
+  );
 
   async function carregarConsultas() {
     setLoading(true);
     try {
       const dados = await consultasService.listarConsultas(
         usuario?.id,
-        isAdmin()
+        isAdmin(),
       );
       setConsultas(dados);
     } catch (error) {
@@ -87,7 +87,7 @@ export default function ConsultasListScreen({
               await consultasService.cancelarConsulta(
                 id,
                 usuario?.id,
-                isAdmin()
+                isAdmin(),
               );
               Alert.alert("Sucesso", "Consulta cancelada");
               carregarConsultas();
@@ -96,7 +96,7 @@ export default function ConsultasListScreen({
             }
           },
         },
-      ]
+      ],
     );
   }
 
@@ -104,14 +104,18 @@ export default function ConsultasListScreen({
     navigation.navigate("ConsultaDetalhes", { consultaId: id });
   }
 
-  const consultasFiltradas =
+  const consultasFiltradas = (
     filtroAtivo === "todas"
       ? consultas
-      : consultas.filter((c) => c.status === filtroAtivo);
-
-  if (loading) {
-    return <Loading mensagem="Carregando consultas..." />;
-  }
+      : consultas.filter((c) => c.status === filtroAtivo)
+  )
+    .slice()
+    .sort((a, b) => {
+      // Emergências / prioridade aparecem primeiro na lista
+      const pa = a.prioridade || a.emergencia ? 1 : 0;
+      const pb = b.prioridade || b.emergencia ? 1 : 0;
+      return pb - pa;
+    });
 
   return (
     <View style={styles.container}>
